@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chancellor Institute — Career Compass</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0d0b;
+    --paper: #f5f2ec;
+    --cream: #ede9e0;
+    --gold: #b8943a;
+    --gold-light: #d4af62;
+    --gold-pale: #f0e4c0;
+    --muted: #6b6455;
+    --border: rgba(14,13,11,0.12);
+    --card: #faf8f4;
+    --teal: #1a5c5c;
+    --teal-light: #e8f4f4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 1.8rem 3rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: none;
+  }
+
+  .logo-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+
+  .logo-sep {
+    width: 1px; height: 18px;
+    background: var(--border);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .logo-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── COMPASS HERO ── */
+  .compass-hero {
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compass-wrap {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.6rem;
+    animation: compassEntry 0.9s cubic-bezier(0.2, 0, 0.3, 1) both;
+  }
+
+  @keyframes compassEntry {
+    from { opacity: 0; transform: rotate(-20deg) scale(0.85); }
+    to   { opacity: 1; transform: rotate(0deg) scale(1); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  /* ── FORM ── */
+  .form-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+  }
+
+  .field { margin-bottom: 1.3rem; }
+
+  .field-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .field-num {
+    background: var(--gold);
+    color: #fff;
+    border-radius: 50%;
+    width: 17px; height: 17px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .field-opt {
+    font-size: 0.52rem;
+    opacity: 0.6;
+    letter-spacing: 0.08em;
+  }
+
+  select, input[type="text"], textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    padding: 0.7rem 0.9rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6455' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.2rem;
+  }
+
+  select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.65;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  /* ── GOAL CARDS ── */
+  .goal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.55rem;
+    margin-top: 0.4rem;
+  }
+
+  .goal-card {
+    border: 1px solid var(--border);
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    background: var(--card);
+    transition: all 0.15s;
+    border-radius: 4px;
+    user-select: none;
+  }
+
+  .goal-card:hover { border-color: var(--gold); background: var(--cream); }
+
+  .goal-card.selected {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .goal-card.selected .goal-name { color: var(--paper); }
+  .goal-card.selected .goal-desc { color: rgba(245,242,236,0.52); }
+
+  .goal-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .goal-desc {
+    font-size: 0.67rem;
+    color: var(--muted);
+    line-height: 1.38;
+  }
+
+  /* ── REVIEW NOTE ── */
+  .review-note {
+    display: none;
+    background: var(--gold-pale);
+    border: 1px solid rgba(184,148,58,0.35);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 0.76rem;
+    color: var(--ink);
+    line-height: 1.65;
+    margin-top: 0.55rem;
+  }
+
+  .review-note strong { font-weight: 500; color: var(--gold); }
+
+  /* ── BUTTON ── */
+  .btn-submit {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.2s;
+    margin-top: 1.5rem;
+    border-radius: 0;
+  }
+
+  .btn-submit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .btn-submit:hover:not(:disabled)::after { transform: scaleX(1); }
+  .btn-submit .btn-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 0.5rem; }
+  .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── LOADING ── */
+  .loading {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .loading-compass { animation: compassSpin 2s linear infinite; }
+  @keyframes compassSpin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── RESULTS ── */
+  #results {
+    display: none;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+
+  .result-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 1rem 1.3rem;
+    background: var(--ink);
+    border-radius: 6px;
+    margin-bottom: 1.3rem;
+    margin-top: 1.8rem;
+  }
+
+  .result-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--paper);
+  }
+
+  .result-name {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--paper);
+    margin-bottom: 0.22rem;
+  }
+
+  .result-meta {
+    font-size: 0.67rem;
+    color: rgba(245,242,236,0.5);
+    line-height: 1.45;
+  }
+
+  .dest-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(26,92,92,0.3);
+    color: #7ecece;
+    border-radius: 4px;
+    padding: 0.22rem 0.65rem;
+    font-size: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.45rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  .trajectory-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 0.9rem;
+    border-radius: 4px;
+    animation: slideUp 0.4s ease both;
+  }
+
+  .trajectory-card:nth-child(1) { animation-delay: 0.05s; }
+  .trajectory-card:nth-child(2) { animation-delay: 0.13s; }
+  .trajectory-card:nth-child(3) { animation-delay: 0.21s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .traj-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 0.7rem;
+  }
+
+  .traj-horizon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold);
+    padding: 0.18rem 0.55rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .traj-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .traj-body {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+    margin: 1.2rem 0;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.9rem;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.32rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  /* ── HONEST BOX ── */
+  .honest-box {
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.2rem;
+    background: var(--gold-pale);
+    border-radius: 0 5px 5px 0;
+    margin: 1.2rem 0;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .honest-box strong {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.84rem;
+  }
+
+  /* ── PROGRAMME RECOMMENDATIONS ── */
+  .prog-section {
+    background: var(--teal-light);
+    border: 1px solid rgba(26,92,92,0.2);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.2rem 0;
+  }
+
+  .prog-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .prog-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .prog-card {
+    background: #fff;
+    border: 1px solid rgba(26,92,92,0.15);
+    border-radius: 5px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .prog-badge {
+    background: var(--teal);
+    color: #fff;
+    border-radius: 3px;
+    padding: 0.18rem 0.52rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .prog-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .prog-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .prog-partner {
+    color: var(--teal);
+    font-style: italic;
+    font-size: 0.66rem;
+  }
+
+  /* ── CTA ── */
+  .cta-bar {
+    background: var(--ink);
+    border-radius: 6px;
+    padding: 1.3rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.2rem 0;
+  }
+
+  .cta-text p:first-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .cta-text p:last-child {
+    font-size: 0.68rem;
+    color: rgba(245,242,236,0.48);
+  }
+
+  .cta-buttons { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+
+  .cta-btn {
+    padding: 0.65rem 1.2rem;
+    border-radius: 5px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    border: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .cta-btn.primary { background: var(--gold); color: #fff; }
+  .cta-btn.primary:hover { background: #9e7020; }
+  .cta-btn.secondary {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.78);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .cta-btn.secondary:hover { background: rgba(255,255,255,0.18); }
+
+  /* ── RESET ── */
+  .reset-row { text-align: center; padding: 1rem 0 0; }
+
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.45rem 1.1rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.15s;
+    border-radius: 4px;
+  }
+
+  .reset-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .footer-dot {
+    width: 7px; height: 7px;
+    background: var(--gold);
+    display: inline-block;
+    margin-right: 0.45rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    header, .compass-hero, .form-wrap, #results, footer {
+      padding-left: 1.4rem;
+      padding-right: 1.4rem;
+    }
+    h1 { font-size: 2.2rem; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .goal-grid { grid-template-columns: 1fr 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+    .cta-bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-mark">Chancellor Institute</span>
+  <span class="logo-sep"></span>
+  <span class="logo-sub">Career Compass</span>
+</header>
+
+<div class="compass-hero">
+
+  <div class="compass-wrap">
+    <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="60" cy="60" r="57" fill="none" stroke="#b8943a" stroke-width="1.5" opacity=".3"/>
+      <circle cx="60" cy="60" r="48" fill="#faf8f4" stroke="#b8943a" stroke-width="1" opacity=".45"/>
+      <!-- Cardinal ticks -->
+      <line x1="60" y1="12" x2="60" y2="20" stroke="#b8943a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="60" y1="100" x2="60" y2="108" stroke="#b8943a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="12" y1="60" x2="20" y2="60" stroke="#b8943a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="100" y1="60" x2="108" y2="60" stroke="#b8943a" stroke-width="2" stroke-linecap="round"/>
+      <!-- Intercardinal ticks -->
+      <line x1="83.3" y1="16.6" x2="80.2" y2="21.9" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="103.4" y1="36.7" x2="98.1" y2="39.8" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="103.4" y1="83.3" x2="98.1" y2="80.2" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="83.3" y1="103.4" x2="80.2" y2="98.1" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="36.7" y1="103.4" x2="39.8" y2="98.1" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="16.6" y1="83.3" x2="21.9" y2="80.2" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="16.6" y1="36.7" x2="21.9" y2="39.8" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <line x1="36.7" y1="16.6" x2="39.8" y2="21.9" stroke="#b8943a" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+      <!-- Cardinal letters -->
+      <text x="60" y="30" text-anchor="middle" dominant-baseline="central" font-family="'DM Mono',monospace" font-size="10" fill="#b8943a" font-weight="400" letter-spacing=".05em">N</text>
+      <text x="60" y="93" text-anchor="middle" dominant-baseline="central" font-family="'DM Mono',monospace" font-size="10" fill="#b8943a" opacity=".45">S</text>
+      <text x="95" y="60.5" text-anchor="middle" dominant-baseline="central" font-family="'DM Mono',monospace" font-size="10" fill="#b8943a" opacity=".45">E</text>
+      <text x="25" y="60.5" text-anchor="middle" dominant-baseline="central" font-family="'DM Mono',monospace" font-size="10" fill="#b8943a" opacity=".45">W</text>
+      <!-- Needle north — gold -->
+      <polygon points="60,35 55.5,62 60,57 64.5,62" fill="#b8943a"/>
+      <!-- Needle south — dark -->
+      <polygon points="60,85 55.5,58 60,63 64.5,58" fill="#0e0d0b" opacity=".3"/>
+      <!-- Centre -->
+      <circle cx="60" cy="60" r="4" fill="#b8943a"/>
+      <circle cx="60" cy="60" r="1.8" fill="#faf8f4"/>
+    </svg>
+  </div>
+
+  <p class="hero-eyebrow">Chancellor Institute</p>
+  <h1>Career <em>Compass</em></h1>
+  <p class="hero-desc">Tell us about yourself and your ambitions. We'll map your realistic career trajectory and show you which Chancellor programme fits best.</p>
+</div>
+
+<div class="form-wrap" id="formWrap">
+
+  <div class="field">
+    <p class="field-label"><span class="field-num">1</span>Your current role</p>
+    <input type="text" id="fRole" placeholder="e.g. Senior Manager, Clinical Director, Head of Finance…" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <p class="field-label"><span class="field-num">2</span>Your sector</p>
+    <select id="fSector">
+      <option value="">Select your sector…</option>
+      <option>Arts & Culture</option>
+      <option>Business & Financial Services</option>
+      <option>Education & Training</option>
+      <option>Fashion & Creative Industries</option>
+      <option>Government & Public Sector</option>
+      <option>Healthcare & Life Sciences</option>
+      <option>Hospitality & Tourism</option>
+      <option>Manufacturing & Industry</option>
+      <option>Non-Profit & NGO</option>
+      <option>Technology & AI</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div class="grid-2">
+    <div class="field">
+      <p class="field-label"><span class="field-num">3</span>Years of experience</p>
+      <select id="fYears" onchange="onYearsChange()">
+        <option value="">Select…</option>
+        <option value="1-4">1–4 years</option>
+        <option value="5-8">5–8 years</option>
+        <option value="9-14">9–14 years</option>
+        <option value="15+">15+ years</option>
+      </select>
+      <div class="review-note" id="reviewNote">
+        <strong>You may still be eligible.</strong> Chancellor's standard entry requirement is 5 years of professional experience, but applications from candidates with fewer than 5 years are considered on a case-by-case basis. If your qualifications and experience are strong, you are encouraged to apply — admission decisions will be made following a review by the admissions team.
+      </div>
+    </div>
+    <div class="field">
+      <p class="field-label"><span class="field-num">4</span>Country</p>
+      <select id="fCountry">
+        <option value="">Select your country…</option>
+        <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option><option>Angola</option><option>Antigua and Barbuda</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahamas</option><option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option><option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option><option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option><option>Brunei</option><option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Cambodia</option><option>Cameroon</option><option>Canada</option><option>Central African Republic</option><option>Chad</option><option>Chile</option><option>China</option><option>Colombia</option><option>Comoros</option><option>Congo (Democratic Republic)</option><option>Congo (Republic)</option><option>Cook Islands</option><option>Costa Rica</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option><option>Czech Republic</option><option>Denmark</option><option>Djibouti</option><option>Dominica</option><option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option><option>El Salvador</option><option>Equatorial Guinea</option><option>Eritrea</option><option>Estonia</option><option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option><option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Grenada</option><option>Guatemala</option><option>Guinea</option><option>Guinea-Bissau</option><option>Guyana</option><option>Haiti</option><option>Honduras</option><option>Hungary</option><option>Iceland</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Jamaica</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kiribati</option><option>Kosovo</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option><option>Latvia</option><option>Lebanon</option><option>Lesotho</option><option>Liberia</option><option>Libya</option><option>Liechtenstein</option><option>Lithuania</option><option>Luxembourg</option><option>Madagascar</option><option>Malawi</option><option>Malaysia</option><option>Maldives</option><option>Mali</option><option>Malta</option><option>Marshall Islands</option><option>Mauritania</option><option>Mauritius</option><option>Mexico</option><option>Micronesia</option><option>Moldova</option><option>Monaco</option><option>Mongolia</option><option>Montenegro</option><option>Morocco</option><option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nauru</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option><option>Niger</option><option>Nigeria</option><option>Niue</option><option>North Korea</option><option>North Macedonia</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palau</option><option>Palestine</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Rwanda</option><option>Saint Kitts and Nevis</option><option>Saint Lucia</option><option>Saint Vincent and the Grenadines</option><option>Samoa</option><option>San Marino</option><option>Sao Tome and Principe</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option><option>Seychelles</option><option>Sierra Leone</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>Solomon Islands</option><option>Somalia</option><option>South Africa</option><option>South Korea</option><option>South Sudan</option><option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Suriname</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Timor-Leste</option><option>Togo</option><option>Tonga</option><option>Trinidad and Tobago</option><option>Tunisia</option><option>Turkey</option><option>Turkmenistan</option><option>Tuvalu</option><option>Uganda</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Vanuatu</option><option>Vatican City</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <p class="field-label"><span class="field-num">5</span>Your career goal</p>
+    <div class="goal-grid" id="goalGrid">
+      <div class="goal-card" data-goal="Executive leadership" onclick="selectGoal(this)">
+        <div class="goal-name">Executive leadership</div>
+        <div class="goal-desc">C-suite, director or VP roles in your sector</div>
+      </div>
+      <div class="goal-card" data-goal="Start or scale a business" onclick="selectGoal(this)">
+        <div class="goal-name">Entrepreneurship</div>
+        <div class="goal-desc">Start, scale or fund a venture</div>
+      </div>
+      <div class="goal-card" data-goal="International career" onclick="selectGoal(this)">
+        <div class="goal-name">International career</div>
+        <div class="goal-desc">Work across borders or relocate</div>
+      </div>
+      <div class="goal-card" data-goal="Academia or research" onclick="selectGoal(this)">
+        <div class="goal-name">Academia or research</div>
+        <div class="goal-desc">Teach, research or publish at university level</div>
+      </div>
+      <div class="goal-card" data-goal="Sector change" onclick="selectGoal(this)">
+        <div class="goal-name">Sector change</div>
+        <div class="goal-desc">Move into a new industry or function</div>
+      </div>
+      <div class="goal-card" data-goal="Consulting & advisory" onclick="selectGoal(this)">
+        <div class="goal-name">Consulting & advisory</div>
+        <div class="goal-desc">Build an independent practice or join a consultancy</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <p class="field-label">
+      <span class="field-num">6</span>
+      Tell us more about your goals
+      <span class="field-opt">(optional but helps us recommend better)</span>
+    </p>
+    <textarea id="fExtra" placeholder="e.g. I want to work in an art gallery, I'm moving into AI leadership, I want to start a fashion brand, I'm relocating to Europe…"></textarea>
+  </div>
+
+  <button class="btn-submit" id="submitBtn" disabled onclick="generate()">
+    <span class="btn-inner">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+        <polygon points="8,3 6.5,8.5 8,7 9.5,8.5" fill="currentColor"/>
+        <polygon points="8,13 6.5,7.5 8,9 9.5,7.5" fill="currentColor" opacity=".4"/>
+        <circle cx="8" cy="8" r="1.2" fill="currentColor"/>
+      </svg>
+      Find my direction
+    </span>
+  </button>
+
+</div>
+
+<div class="loading" id="loading">
+  <div class="loading-compass">
+    <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="26" cy="26" r="24" fill="none" stroke="#b8943a" stroke-width="1" opacity=".4"/>
+      <polygon points="26,10 23.5,27 26,24 28.5,27" fill="#b8943a"/>
+      <polygon points="26,42 23.5,25 26,28 28.5,25" fill="#0e0d0b" opacity=".3"/>
+      <circle cx="26" cy="26" r="2.5" fill="#b8943a"/>
+    </svg>
+  </div>
+  <p class="loading-text">Finding your direction…</p>
+</div>
+
+<div id="results"></div>
+
+<footer>
+  <p><span class="footer-dot"></span>Chancellor Institute · Career Compass</p>
+  <p>100% online · Intakes February, June & September</p>
+</footer>
+
+<script>
+// ── PROGRAMMES ────────────────────────────────────────────────────────────────
+const PROGRAMS = [
+  {
+    badge: 'PhD',
+    name: 'Doctor of Philosophy in Leadership',
+    partner: 'International Executive School',
+    duration: '3–5 years part-time',
+    goals: ['Academia or research', 'Executive leadership'],
+    targetSectors: ['Healthcare & Life Sciences','Business & Financial Services','Education & Training','Government & Public Sector','Non-Profit & NGO','Arts & Culture','Fashion & Creative Industries','Hospitality & Tourism','Manufacturing & Industry','Technology & AI','Other'],
+    crossSectors: [],
+    desc: 'The highest academic qualification — opens doors to university teaching, senior research roles, and executive positions where a doctorate signals the deepest possible credibility.'
+  },
+  {
+    badge: 'EMBA',
+    name: 'Executive Master of Business Administration',
+    partner: 'International Executive School',
+    duration: '1 year online',
+    goals: ['Executive leadership', 'Consulting & advisory', 'Start or scale a business'],
+    targetSectors: ['Business & Financial Services','Government & Public Sector','Non-Profit & NGO','Manufacturing & Industry','Hospitality & Tourism','Other'],
+    crossSectors: ['Arts & Culture','Education & Training','Healthcare & Life Sciences','Technology & AI','Fashion & Creative Industries'],
+    desc: 'A leadership-focused Executive Master of Business Administration for working professionals. Builds strategic thinking, financial acumen and the executive presence needed for C-suite and director roles.'
+  },
+  {
+    badge: 'Grad Cert',
+    name: 'Graduate Certificate in Healthcare Management',
+    partner: 'International Executive School',
+    duration: '6 months online',
+    goals: ['Executive leadership', 'Sector change'],
+    targetSectors: ['Healthcare & Life Sciences'],
+    crossSectors: [],
+    desc: 'A focused credential for healthcare professionals stepping into management — covering health systems leadership, policy, operations and the business side of clinical practice.'
+  },
+  {
+    badge: 'Master',
+    name: 'International Master in Artificial Intelligence',
+    partner: 'Rome Business School',
+    duration: '1 year online',
+    goals: ['Executive leadership', 'Sector change', 'International career'],
+    targetSectors: ['Technology & AI'],
+    crossSectors: ['Business & Financial Services', 'Manufacturing & Industry'],
+    desc: 'Combines AI strategy and application with leadership and management. For professionals who want to lead AI-driven transformation, not just implement it.'
+  },
+  {
+    badge: 'Intl MBA',
+    name: 'International MBA',
+    partner: 'Rome Business School',
+    duration: '1 year online',
+    goals: ['Executive leadership', 'International career', 'Start or scale a business', 'Consulting & advisory', 'Sector change'],
+    targetSectors: ['Business & Financial Services','Hospitality & Tourism','Manufacturing & Industry','Other'],
+    crossSectors: ['Arts & Culture','Education & Training','Government & Public Sector','Non-Profit & NGO','Healthcare & Life Sciences','Technology & AI','Fashion & Creative Industries'],
+    desc: 'A globally-oriented International MBA with strong European industry connections, suited to professionals seeking international mobility and cross-border leadership roles.'
+  },
+  {
+    badge: 'Master',
+    name: 'International Master in Fashion Management',
+    partner: 'Rome Business School',
+    duration: '1 year online',
+    goals: ['Executive leadership', 'International career', 'Start or scale a business', 'Sector change'],
+    targetSectors: ['Fashion & Creative Industries'],
+    crossSectors: [],
+    desc: 'Covers luxury brand strategy, retail operations, sustainability and the global fashion economy — the specialist programme for fashion and lifestyle industry leaders.'
+  },
+  {
+    badge: 'Master',
+    name: 'International Master in Arts & Culture Management',
+    partner: 'Rome Business School',
+    duration: '1 year online',
+    goals: ['Executive leadership', 'Sector change', 'Consulting & advisory', 'International career', 'Start or scale a business'],
+    targetSectors: ['Arts & Culture', 'Non-Profit & NGO', 'Education & Training'],
+    crossSectors: [],
+    desc: 'For arts administrators and cultural leaders seeking the strategic and financial skills to run institutions, attract funding and shape cultural policy.'
+  },
+];
+
+// ── KEYWORD → SECTOR DETECTION ────────────────────────────────────────────────
+const KW_MAP = {
+  'Arts & Culture': ['art','arts','gallery','galleries','museum','museums','curator','curating','theatre','theater','opera','cultural','culture','heritage','exhibition','performing arts','visual arts','arts management','arts administration','creative industry','creative industries'],
+  'Fashion & Creative Industries': ['fashion','luxury brand','designer','clothing','apparel','textile','accessories','lifestyle brand','fashion management','fashion industry','haute couture','retail brand'],
+  'Technology & AI': ['ai','artificial intelligence','machine learning','data science','tech','technology','software','digital transformation','innovation','startup','fintech','edtech','healthtech','data analyst','developer'],
+  'Healthcare & Life Sciences': ['hospital','clinical','healthcare','health sector','medical','nursing','pharmacy','biotech','life sciences','nhs','patient care','public health','doctor','physician'],
+  'Education & Training': ['school','university','teaching','academic','lecturer','training provider','higher education','college','curriculum','pedagogy'],
+  'Business & Financial Services': ['finance','banking','investment','management consulting','corporate strategy','financial services','accounting','audit','private equity','venture capital'],
+  'Government & Public Sector': ['government','public sector','policy','civil service','international development','diplomacy','foreign affairs','un agency','public administration'],
+  'Non-Profit & NGO': ['ngo','non-profit','nonprofit','charity','social enterprise','third sector','development organisation','aid'],
+  'Hospitality & Tourism': ['hotel','hospitality','tourism','travel industry','restaurant','events management','food and beverage','leisure','resort'],
+  'Manufacturing & Industry': ['manufacturing','engineering','operations management','supply chain','logistics','industrial','production','automotive','aerospace'],
+};
+
+function detectDestinationSector(text) {
+  if (!text || !text.trim()) return null;
+  const lower = text.toLowerCase();
+  for (const [sector, keywords] of Object.entries(KW_MAP)) {
+    if (keywords.some(kw => lower.includes(kw))) return sector;
+  }
+  return null;
+}
+
+// ── PROGRAMME MATCHING ────────────────────────────────────────────────────────
+function matchPrograms(currentSector, goal, destSector) {
+  const isSectorChange = goal === 'Sector change';
+
+  if (isSectorChange && destSector) {
+    // Moving into a known destination: prioritise programmes targeting that destination
+    const destMatch = PROGRAMS.filter(p =>
+      p.goals.includes(goal) && p.targetSectors.includes(destSector)
+    );
+    // Also include broad cross-sector programmes as secondary options
+    const broadMatch = PROGRAMS.filter(p =>
+      p.goals.includes(goal) &&
+      p.crossSectors.length > 0 &&
+      !destMatch.includes(p)
+    );
+    return [...destMatch, ...broadMatch].slice(0, 3);
+  }
+
+  if (isSectorChange && !destSector) {
+    // No destination known: show broad transferable programmes, exclude specialist-only ones
+    return PROGRAMS.filter(p =>
+      p.goals.includes(goal) &&
+      (p.targetSectors.includes('Other') || p.crossSectors.length > 1) &&
+      p.badge !== 'Grad Cert'
+    ).slice(0, 3);
+  }
+
+  // All other goals: match on current sector first
+  const exactMatch = PROGRAMS.filter(p =>
+    p.goals.includes(goal) && p.targetSectors.includes(currentSector)
+  );
+
+  if (exactMatch.length >= 1) {
+    // Supplement with broad programmes where needed, keeping exact matches first
+    const broadMatch = PROGRAMS.filter(p =>
+      p.goals.includes(goal) &&
+      p.targetSectors.includes('Other') &&
+      !exactMatch.includes(p)
+    );
+    return [...exactMatch, ...broadMatch].slice(0, 3);
+  }
+
+  // Fallback: any programme matching the goal
+  return PROGRAMS.filter(p => p.goals.includes(goal) && p.targetSectors.includes('Other')).slice(0, 3);
+}
+
+// ── TRAJECTORIES ──────────────────────────────────────────────────────────────
+const TRAJECTORIES = {
+  'Executive leadership': {
+    without: 'Without additional credentials, progression to the most senior roles typically stalls at senior manager or department head level — not because of capability, but because executive selection increasingly filters for postgraduate qualifications as a signal of strategic thinking and professional commitment.',
+    with: 'A postgraduate qualification changes how you are perceived in executive selection. It signals intellectual rigour and the structured thinking that boards and leadership teams look for. In most sectors, a masters or doctorate accelerates the path to C-suite by three to five years compared to experience alone.',
+    h1: 'Director or Head of Department', t1: '1–2 years post-qualification',
+    h2: 'VP, General Manager or C-suite', t2: '3–5 years post-qualification',
+    h3: 'Board-level or Founding Executive', t3: '7–10 years post-qualification',
+  },
+  'Start or scale a business': {
+    without: 'Many successful entrepreneurs launch without formal postgraduate study. The risk is that without structured frameworks for strategy, finance and leadership, growth often plateaus at the point where the business needs to professionalise its management rather than rely on the founder\'s instincts.',
+    with: 'An Executive Master of Business Administration or specialist masters gives you the language, frameworks and networks to attract investors, negotiate partnerships and build a leadership team. It also lends credibility with institutional clients who scrutinise the credentials of the founders they work with.',
+    h1: 'Investor-ready founder with structured strategic capability', t1: 'During and immediately after study',
+    h2: 'Scale-up leader with professionalised management', t2: '2–4 years post-qualification',
+    h3: 'Multi-venture or portfolio entrepreneur', t3: '5–8 years post-qualification',
+  },
+  'International career': {
+    without: 'International employers — particularly in Europe, the Gulf and multinational corporations — use postgraduate qualifications as a first-pass filter for senior roles. Without one, accessing international leadership positions from outside those markets is significantly harder regardless of experience.',
+    with: 'An internationally-awarded qualification from a recognised institution establishes immediate credibility in markets where your local experience may not be known. It also builds the cross-cultural frameworks and global business literacy that international roles demand.',
+    h1: 'Regional or international management role', t1: '1–2 years post-qualification',
+    h2: 'Cross-border leadership or expatriate executive', t2: '3–5 years post-qualification',
+    h3: 'Global executive or international portfolio career', t3: '6–10 years post-qualification',
+  },
+  'Academia or research': {
+    without: 'Without a doctorate, access to university teaching, research leadership and published academic careers is effectively closed in most fields. A masters may open some lecturer positions, but progression beyond that requires a PhD in virtually every discipline.',
+    with: 'The PhD is the gateway credential for an academic career. With it you are eligible for lectureships, research fellowships, postgraduate supervision and peer-reviewed publication. Most academic careers take 10–15 years to reach professorial level.',
+    h1: 'Research fellow or sessional lecturer', t1: 'During doctoral study',
+    h2: 'Lecturer or early-career researcher', t2: '1–3 years post-PhD',
+    h3: 'Senior lecturer, associate professor or research lead', t3: '8–15 years post-PhD',
+  },
+  'Sector change': {
+    without: 'Changing sectors mid-career without a new credential is possible but slow. Employers in the target sector typically discount existing experience because it is contextual — without a qualification signalling transferable strategic capability, you may have to accept a step down to enter.',
+    with: 'A postgraduate qualification — particularly one that bridges your origin sector with your destination — provides the credible narrative for a transition and gives you the theoretical frameworks that experienced hires in that sector are assumed to possess.',
+    h1: 'Entry into target sector at peer level with no step-down', t1: 'Immediately post-qualification',
+    h2: 'Established manager or specialist in new sector', t2: '2–3 years post-qualification',
+    h3: 'Leadership role leveraging cross-sector perspective', t3: '4–7 years post-qualification',
+  },
+  'Consulting & advisory': {
+    without: 'Independent consulting without credentials relies almost entirely on referral reputation. It limits your ability to pitch to organisations requiring formal qualifications from their advisors, and makes it harder to charge fees that reflect senior-level expertise.',
+    with: 'A postgraduate qualification — particularly an Executive Master of Business Administration or doctorate — dramatically expands the client base you can credibly approach and gives you the analytical frameworks that distinguish high-value consulting from senior-practitioner advice.',
+    h1: 'Independent practice or boutique consultancy established', t1: 'During or immediately after study',
+    h2: 'Established consultant with retainer clients', t2: '2–4 years post-qualification',
+    h3: 'Practice leader, author or recognised sector authority', t3: '6–10 years post-qualification',
+  },
+};
+
+// ── COUNTRY NOTES ─────────────────────────────────────────────────────────────
+const COUNTRY_NOTES = {
+  'Nigeria': 'In Nigeria, postgraduate qualifications from internationally recognised institutions carry significant weight in executive selection and are increasingly required for senior roles in both the public sector and major corporations.',
+  'Kenya': 'In Kenya, an internationally-awarded postgraduate qualification distinguishes you in a competitive professional landscape and is particularly valued by multinationals, development organisations and government bodies.',
+  'Ghana': 'In Ghana, internationally-recognised postgraduate credentials are increasingly expected for senior leadership roles and give you a meaningful advantage in both domestic and cross-border opportunities.',
+  'South Africa': 'In South Africa, a postgraduate qualification from an international institution opens doors in a sophisticated economy where executive roles are increasingly competitive and internationally connected.',
+  'Tanzania': 'In Tanzania\'s growing economy, an internationally-awarded qualification positions you strongly for leadership roles in both the expanding private sector and government.',
+  'Uganda': 'In Uganda, an internationally-recognised postgraduate credential is a significant differentiator for senior roles, particularly in healthcare, government, development and financial services.',
+  'Rwanda': 'In Rwanda\'s rapidly developing economy, international postgraduate credentials are highly valued across government, business and the growing technology and tourism sectors.',
+  'Ethiopia': 'In Ethiopia, an internationally-awarded qualification gives you a strong competitive advantage as the economy grows and demand for professionally qualified leaders increases.',
+  'Cameroon': 'In Cameroon, an internationally-recognised postgraduate qualification positions you for leadership in a bilingual economy with strong ties to both Francophone and Anglophone markets.',
+  'Senegal': 'In Senegal, internationally-recognised credentials are valued across the public sector, financial services and the growing francophone business community.',
+  'India': 'In India\'s highly competitive professional landscape, an internationally-awarded postgraduate qualification distinguishes you from a large field of domestically-qualified candidates and is particularly valued by multinationals and global firms.',
+  'Pakistan': 'In Pakistan, internationally-recognised postgraduate credentials are highly valued by multinational employers and open doors that domestically-awarded qualifications often cannot.',
+  'Bangladesh': 'In Bangladesh\'s fast-growing economy, international postgraduate credentials are increasingly sought by employers in financial services, healthcare and technology.',
+  'Sri Lanka': 'In Sri Lanka, an internationally-awarded qualification gives you a strong advantage for senior roles and opens opportunities with the diaspora and international employers.',
+  'Nepal': 'In Nepal, international postgraduate credentials are particularly valued by development organisations, NGOs and multinational employers operating in the region.',
+  'Philippines': 'In the Philippines, internationally-awarded qualifications are highly valued and significantly expand your opportunities both domestically and with international employers across the Asia-Pacific.',
+  'Vietnam': 'In Vietnam\'s dynamic and rapidly internationalising economy, international postgraduate credentials are increasingly expected for senior leadership roles in both local and multinational firms.',
+  'Indonesia': 'In Indonesia, an internationally-recognised postgraduate qualification is increasingly valued as the economy integrates further with global markets and demand for internationally-minded leaders grows.',
+  'Malaysia': 'In Malaysia, international postgraduate credentials are widely valued and open doors across the sophisticated and internationally-connected financial, technology and government sectors.',
+  'Singapore': 'In Singapore, one of the world\'s most internationally-competitive professional markets, a postgraduate qualification from a recognised institution is often a prerequisite for senior leadership consideration.',
+  'Thailand': 'In Thailand, international postgraduate credentials are increasingly valued in a growing economy with strong links to global tourism, manufacturing and financial services.',
+  'United Arab Emirates': 'In the UAE, internationally-awarded postgraduate credentials are highly valued for senior roles across government entities, multinational corporations and the thriving private sector. European and Australian institutions are particularly well regarded.',
+  'Saudi Arabia': 'In Saudi Arabia, internationally-recognised postgraduate qualifications are increasingly important for senior roles as Vision 2030 drives demand for professionally-qualified leadership across public and private sectors.',
+  'Qatar': 'In Qatar, internationally-awarded postgraduate credentials are valued across government entities, financial services and the wide range of multinational organisations active in the country.',
+  'Kuwait': 'In Kuwait, an internationally-recognised postgraduate qualification strengthens your candidacy for senior roles across the public sector, financial services and multinational employers.',
+  'Bahrain': 'In Bahrain\'s internationally-oriented economy, postgraduate credentials from recognised institutions are valued in financial services, government and the growing private sector.',
+  'Oman': 'In Oman, internationally-awarded postgraduate qualifications are increasingly valued as the economy diversifies and demand for qualified professional leadership grows.',
+  'Jordan': 'In Jordan, international postgraduate credentials open doors across government, NGOs and the multinational employer community, and are particularly valued given the country\'s role as a regional hub.',
+  'Egypt': 'In Egypt, an internationally-recognised postgraduate qualification distinguishes you in a large and competitive professional market and is valued by multinationals, government and financial services.',
+  'Morocco': 'In Morocco, internationally-awarded credentials are valued across a growing economy with strong links to European markets, positioning you well for both domestic and cross-border opportunities.',
+  'Australia': 'All Chancellor programmes are delivered fully online, allowing you to study from anywhere in Australia without interrupting your career. Programmes are delivered in partnership with internationally recognised institutions.',
+  'United Kingdom': 'All Chancellor programmes are delivered fully online with no travel required. As a UK-based professional, you benefit from flexible study that fits around demanding careers.',
+  'United States': 'All Chancellor programmes are 100% online with no travel required, making it straightforward to study alongside a full-time career from anywhere in the United States.',
+  'Canada': 'All Chancellor programmes are delivered fully online, allowing you to study from Canada without disrupting your career or personal commitments.',
+  'New Zealand': 'All Chancellor programmes are delivered fully online. As a New Zealand-based professional, you can study flexibly alongside your career with no travel required.',
+  'Ireland': 'All Chancellor programmes are 100% online with no travel required, making it easy to study from Ireland while continuing your professional career.',
+  'Germany': 'All Chancellor programmes are delivered fully online with no travel required, making it easy to study from Germany while continuing your career.',
+  'France': 'All Chancellor programmes are 100% online with no travel required, allowing you to study from France while maintaining your professional commitments.',
+  'Italy': 'All Chancellor programmes are delivered fully online, making it straightforward to study from Italy without any career disruption or travel.',
+  'Spain': 'All Chancellor programmes are 100% online with no travel required, allowing you to study from Spain while maintaining your professional and personal commitments.',
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let selectedGoal = null;
+
+// ── FORM INTERACTIONS ─────────────────────────────────────────────────────────
+function onYearsChange() {
+  const val = document.getElementById('fYears').value;
+  document.getElementById('reviewNote').style.display = val === '1-4' ? 'block' : 'none';
+  checkReady();
+}
+
+function selectGoal(el) {
+  document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedGoal = el.dataset.goal;
+  checkReady();
+}
+
+['fRole', 'fSector', 'fCountry'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', checkReady);
+  el.addEventListener('change', checkReady);
+});
+document.getElementById('fYears').addEventListener('change', checkReady);
+
+function checkReady() {
+  const ok =
+    document.getElementById('fRole').value.trim() &&
+    document.getElementById('fSector').value &&
+    document.getElementById('fYears').value &&
+    document.getElementById('fCountry').value &&
+    selectedGoal;
+  document.getElementById('submitBtn').disabled = !ok;
+}
+
+function getInitials(role) {
+  return role.split(' ').filter(w => w).map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+// ── GENERATE RESULTS ──────────────────────────────────────────────────────────
+function generate() {
+  const role    = document.getElementById('fRole').value.trim();
+  const sector  = document.getElementById('fSector').value;
+  const years   = document.getElementById('fYears').value;
+  const country = document.getElementById('fCountry').value;
+  const extra   = document.getElementById('fExtra').value.trim();
+
+  document.getElementById('formWrap').style.display = 'none';
+  document.getElementById('loading').style.display  = 'flex';
+
+  setTimeout(() => {
+    document.getElementById('loading').style.display = 'none';
+
+    const destSector  = detectDestinationSector(extra);
+    const programmes  = matchPrograms(sector, selectedGoal, destSector);
+    const trajectory  = TRAJECTORIES[selectedGoal];
+    const initials    = getInitials(role);
+
+    // Honest assessment text
+    const experienceNote =
+      years === '1-4'
+        ? 'With 1–4 years of experience, you fall below Chancellor\'s standard entry requirement of 5 years. However, Chancellor reviews applications from earlier-career candidates on a case-by-case basis — if your academic qualifications and professional experience demonstrate strong potential, you are encouraged to apply. Admission decisions for candidates in this category are made following individual review by the admissions team.'
+        : years === '5-8'
+        ? 'With 5–8 years of experience, you meet Chancellor\'s entry requirement. This is a strong time to study — your experience is sufficient to contextualise what you learn, and a qualification now compounds in value across the longest possible remaining career horizon.'
+        : years === '9-14'
+        ? 'With 9–14 years of experience, you are at the inflection point where many professionals find that experience alone stops opening new doors. A postgraduate qualification at this stage often delivers the highest career return — you bring enough context to extract maximum value from the programme, with enough career ahead to realise it.'
+        : 'With 15+ years of experience, the question is not whether you are capable — it is whether your credentials reflect the level your capability deserves. A doctorate or executive masters at this career stage is as much a legitimising credential as a learning experience, and it opens board-level and academic doors that experience alone rarely unlocks.';
+
+    const countryNote = COUNTRY_NOTES[country] ||
+      `All Chancellor programmes are delivered 100% online, allowing you to study from ${country} without interrupting your career or relocating.`;
+
+    const withParts = trajectory.with.split('. ');
+
+    const destBadge = destSector
+      ? `<div class="dest-badge">
+           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+             <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/>
+             <polygon points="6,2 5,6.5 6,5.5 7,6.5" fill="currentColor"/>
+           </svg>
+           Destination detected: ${destSector}
+         </div>`
+      : '';
+
+    const progsHtml = programmes.length > 0
+      ? `<div class="prog-section">
+           <p class="prog-section-label">Recommended programmes for your profile</p>
+           <div class="prog-list">
+             ${programmes.map(p => `
+               <div class="prog-card">
+                 <span class="prog-badge">${p.badge}</span>
+                 <div>
+                   <div class="prog-name">${p.name}</div>
+                   <div class="prog-desc">${p.desc} <span class="prog-partner">With ${p.partner} · ${p.duration}</span></div>
+                 </div>
+               </div>
+             `).join('')}
+           </div>
+         </div>`
+      : '';
+
+    const html = `
+      <div class="result-profile">
+        <div class="result-avatar">${initials}</div>
+        <div>
+          <div class="result-name">${role}</div>
+          <div class="result-meta">${sector} · ${years} years · ${country} · ${selectedGoal}</div>
+          ${destBadge}
+        </div>
+      </div>
+
+      <p class="section-label">Without further study</p>
+      <div class="trajectory-card" style="border-left: 3px solid var(--muted)">
+        <p class="traj-body">${trajectory.without}</p>
+      </div>
+
+      <p class="section-label" style="margin-top: 1.1rem">With a postgraduate qualification</p>
+      <div class="trajectory-card">
+        <div class="traj-header">
+          <span class="traj-horizon">${trajectory.t1}</span>
+          <span class="traj-role">${trajectory.h1}</span>
+        </div>
+        <p class="traj-body">${withParts[0]}.</p>
+      </div>
+      <div class="trajectory-card">
+        <div class="traj-header">
+          <span class="traj-horizon">${trajectory.t2}</span>
+          <span class="traj-role">${trajectory.h2}</span>
+        </div>
+        <p class="traj-body">${withParts.slice(1, 3).join('. ')}.</p>
+      </div>
+      <div class="trajectory-card">
+        <div class="traj-header">
+          <span class="traj-horizon">${trajectory.t3}</span>
+          <span class="traj-role">${trajectory.h3}</span>
+        </div>
+        <p class="traj-body">By this horizon, the qualification has done its work. What remains is your track record, your network, and the leadership you have demonstrated along the way.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">online — no travel ever required</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">1 yr</span>
+          <span class="stat-label">to complete most master programmes</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">3×</span>
+          <span class="stat-label">annual intakes — Feb, Jun & Sep</span>
+        </div>
+      </div>
+
+      <div class="honest-box">
+        <strong>An honest assessment for you</strong>
+        ${experienceNote} ${countryNote}
+      </div>
+
+      ${progsHtml}
+
+      <div class="cta-bar">
+        <div class="cta-text">
+          <p>Ready to find your direction?</p>
+          <p>Applications open year-round · Processed within 1–3 business days</p>
+        </div>
+        <div class="cta-buttons">
+          <a href="https://chancellor.education/fees/" target="_blank" class="cta-btn secondary">View fees</a>
+          <a href="https://chancellor.education/apply-now/" target="_blank" class="cta-btn primary">Apply now</a>
+        </div>
+      </div>
+
+      <div class="reset-row">
+        <button class="reset-btn" onclick="resetForm()">Start again</button>
+      </div>
+    `;
+
+    const resultsEl = document.getElementById('results');
+    resultsEl.innerHTML = html;
+    resultsEl.style.display = 'block';
+    setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+  }, 2000);
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetForm() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('formWrap').style.display = 'block';
+
+  selectedGoal = null;
+  document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('reviewNote').style.display = 'none';
+  document.getElementById('fYears').value = '';
+  document.getElementById('fExtra').value = '';
+  document.getElementById('submitBtn').disabled = true;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
