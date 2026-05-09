@@ -963,7 +963,6 @@
     <div class="holding-back-options" id="holdingBackOptions">
       <div class="hb-option" data-concern="cost" onclick="selectConcern(this)">💰 Cost of study</div>
       <div class="hb-option" data-concern="time" onclick="selectConcern(this)">⏱ Time commitment</div>
-      <div class="hb-option" data-concern="recognition" onclick="selectConcern(this)">🎓 Recognition of qualification</div>
       <div class="hb-option" data-concern="employer" onclick="selectConcern(this)">🏢 Employer support</div>
       <div class="hb-option" data-concern="family" onclick="selectConcern(this)">👨‍👩‍👧 Family commitments</div>
       <div class="hb-option" data-concern="unsure" onclick="selectConcern(this)">🤔 Not sure if it's right for me</div>
@@ -1459,7 +1458,7 @@ function generate() {
                  <span class="prog-badge">${p.badge}</span>
                  <div>
                    <div class="prog-name">${p.name}</div>
-                   <div class="prog-desc">${p.desc} <span class="prog-partner">With ${p.partner} · ${p.duration}</span></div>
+                   <div class="prog-desc">${p.desc} <span class="prog-partner">${p.duration}</span></div>
                  </div>
                </div>
              `).join('')}
@@ -1485,7 +1484,6 @@ function generate() {
     const objections = {
       cost: `Chancellor programmes are designed for working professionals — meaning you continue earning while you study. Many employers also fund or contribute to postgraduate fees; our advisors can help you build a case for employer sponsorship. The return on a postgraduate qualification — in salary, seniority and opportunity — typically far exceeds the cost within 2–3 years.`,
       time: `All Chancellor programmes are 100% online with no fixed class times, designed to fit around full-time careers. Most students spend 8–12 hours per week studying. The Executive Master of Business Administration completes in 1 year; the PhD in 3–5 years part-time. Our advisors can walk you through how other ${sector} professionals have made it work.`,
-      recognition: `Chancellor delivers its programmes in partnership with internationally accredited institutions — the International Executive School and Rome Business School. Graduates hold qualifications that are recognised by employers in over 60 countries. Our advisors can provide specific recognition information for your country and sector.`,
       employer: `Many Chancellor students study with employer support — either full sponsorship or partial funding. We can provide you with a professional programme overview designed for HR and finance decision-makers, making the case for employer investment straightforward. Our advisors help with this regularly.`,
       family: `Chancellor's fully online, flexible model was designed with exactly this in mind. There are no set class times, no campus visits, and no travel. You study when it suits you — evenings, weekends, or during quiet periods at work. Many of our students are parents and caregivers. Our advisors can share how others in your situation have structured their study.`,
       unsure: `That's exactly why the Career Compass exists — and why speaking with an advisor matters. A 20-minute conversation with one of our team costs nothing and commits you to nothing. They can tell you honestly whether a programme is right for your situation, your goals and your budget. No pressure, no sales pitch.`,
@@ -1496,9 +1494,6 @@ function generate() {
         <p class="holding-back-label">We hear this often — here's an honest answer</p>
         <p style="font-size:0.82rem;line-height:1.68;color:var(--muted)">${objections[selectedConcern]}</p>
       </div>` : '';
-
-    // ── PROGRAMME TEXT FOR EMAIL ──
-    const progText = programmes.map(p => `${p.badge}: ${p.name} (${p.partner} · ${p.duration})`).join('\n');
 
     const html = `
       <div class="result-profile">
@@ -1537,13 +1532,25 @@ function generate() {
         </div>
       </div>
 
-      <div class="trajectory-card">
+      <div class="trajectory-card" style="border-left:3px solid var(--gold)">
+        <div class="traj-header">
+          <span class="traj-horizon">${tl.t1}</span>
+          <span class="traj-role">${tl.h1}</span>
+        </div>
         <p class="traj-body">${withText}</p>
       </div>
-      <div class="trajectory-card">
+      <div class="trajectory-card" style="border-left:3px solid rgba(184,148,58,0.4)">
+        <div class="traj-header">
+          <span class="traj-horizon">${tl.t2}</span>
+          <span class="traj-role">${tl.h2}</span>
+        </div>
         <p class="traj-body">At this horizon, the qualification has established its value. You are no longer defined solely by your experience — your credentials and your track record work together to open doors that experience alone could not.</p>
       </div>
-      <div class="trajectory-card">
+      <div class="trajectory-card" style="border-left:3px solid rgba(184,148,58,0.2)">
+        <div class="traj-header">
+          <span class="traj-horizon">${tl.t3}</span>
+          <span class="traj-role">${tl.h3}</span>
+        </div>
         <p class="traj-body">By this horizon, the qualification has done its work. What remains is your track record, your network, and the leadership you have demonstrated along the way.</p>
       </div>
 
@@ -1596,54 +1603,6 @@ function generate() {
     }, 100);
 
   }, 2000);
-}
-
-// ── SEND EMAIL VIA EMAILJS ─────────────────────────────────────────────────
-function sendEmail(firstName, role, sector, years, country, goal, withoutText, withText, assessment, programmes) {
-  const emailEl  = document.getElementById('emailInput');
-  const statusEl = document.getElementById('emailStatus');
-  const btnEl    = document.querySelector('.email-send-btn');
-
-  const email = emailEl ? emailEl.value.trim() : '';
-  if (!email || !email.includes('@')) {
-    statusEl.textContent = 'Please enter a valid email address.';
-    statusEl.className = 'email-status error';
-    statusEl.style.display = 'block';
-    return;
-  }
-
-  btnEl.disabled = true;
-  btnEl.textContent = 'Sending…';
-
-  const params = {
-    first_name:   firstName || 'there',
-    role:         role,
-    sector:       sector,
-    years:        years,
-    country:      country,
-    goal:         goal,
-    without_text: withoutText,
-    with_text:    withText,
-    assessment:   assessment,
-    programmes:   programmes,
-    user_email:   email,
-    reply_to:     email,
-  };
-
-  emailjs.send('service_4fm6jxb', 'template_pvagfpb', params)
-    .then(() => {
-      statusEl.textContent = '✓ Sent! Check your inbox — and we\'ll be in touch soon.';
-      statusEl.className = 'email-status success';
-      statusEl.style.display = 'block';
-      btnEl.textContent = 'Sent ✓';
-    })
-    .catch(() => {
-      statusEl.textContent = 'Something went wrong. Please try again or contact us directly.';
-      statusEl.className = 'email-status error';
-      statusEl.style.display = 'block';
-      btnEl.disabled = false;
-      btnEl.textContent = 'Email my results';
-    });
 }
 
 // ── RESET ─────────────────────────────────────────────────────────────────────
