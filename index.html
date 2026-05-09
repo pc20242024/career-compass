@@ -758,9 +758,7 @@
         <option value="9-14">9–14 years</option>
         <option value="15+">15+ years</option>
       </select>
-      <div class="review-note" id="reviewNote">
-        <strong>You may still be eligible.</strong> Chancellor's standard entry requirement is 5 years of professional experience, but applications from candidates with fewer than 5 years are considered on a case-by-case basis. If your qualifications and experience are strong, you are encouraged to apply — admission decisions will be made following a review by the admissions team.
-      </div>
+
     </div>
     <div class="field">
       <p class="field-label"><span class="field-num">4</span>Country</p>
@@ -1082,8 +1080,6 @@ let selectedGoal = null;
 
 // ── FORM INTERACTIONS ─────────────────────────────────────────────────────────
 function onYearsChange() {
-  const val = document.getElementById('fYears').value;
-  document.getElementById('reviewNote').style.display = val === '1-4' ? 'block' : 'none';
   checkReady();
 }
 
@@ -1271,7 +1267,6 @@ function resetForm() {
 
   selectedGoal = null;
   document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
-  document.getElementById('reviewNote').style.display = 'none';
   document.getElementById('fYears').value = '';
   document.getElementById('fExtra').value = '';
   document.getElementById('submitBtn').disabled = true;
