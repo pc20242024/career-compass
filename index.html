@@ -1130,20 +1130,116 @@ function generate() {
     const trajectory  = TRAJECTORIES[selectedGoal];
     const initials    = getInitials(role);
 
-    // Honest assessment text
+    // ── ROLE-AWARE CONTEXT ──
+    // Detect seniority from current role title
+    const roleLower = role.toLowerCase();
+    const isSenior = /\b(director|head|vp|vice president|president|ceo|cfo|coo|cto|chief|principal|partner|general manager|managing director|md|executive|senior manager|senior director)\b/.test(roleLower);
+    const isMid = /\b(manager|supervisor|coordinator|lead|advisor|consultant|officer|specialist|analyst)\b/.test(roleLower);
+    const isJunior = !isSenior && !isMid;
+
+    // ── EXPERIENCE-AWARE TIMELINES ──
+    // Timelines adjust based on years of experience AND current seniority
+    function getTimelines(goal, yrs, senior) {
+      const isHighExp = yrs === '15+';
+      const isMidExp  = yrs === '9-14';
+      const isLowExp  = yrs === '5-8' || yrs === '1-4';
+
+      const base = {
+        'Executive leadership': {
+          h1: senior ? 'Senior Director or Division Head' : isMid ? 'Head of Department or Senior Manager' : 'Senior Manager or Team Lead',
+          t1: isHighExp ? 'During or immediately post-qualification' : isMidExp ? '1–2 years post-qualification' : '2–3 years post-qualification',
+          h2: senior ? 'C-suite or Board-level Executive' : isMid ? 'Director or VP' : 'Head of Department',
+          t2: isHighExp ? '1–3 years post-qualification' : isMidExp ? '3–5 years post-qualification' : '4–6 years post-qualification',
+          h3: senior ? 'Board Director, Chair or Group Executive' : 'C-suite or Senior Executive',
+          t3: isHighExp ? '3–6 years post-qualification' : '6–10 years post-qualification',
+        },
+        'Start or scale a business': {
+          h1: 'Business plan or pilot venture with credible investor pitch',
+          t1: 'During study',
+          h2: 'Operational business with first revenue and small team',
+          t2: '1–3 years post-qualification',
+          h3: senior ? 'Established business or portfolio of ventures' : 'Scaled business or second venture',
+          t3: '4–8 years post-qualification',
+        },
+        'International career': {
+          h1: 'Regional role or international project leadership',
+          t1: isHighExp ? 'Immediately post-qualification' : '1–2 years post-qualification',
+          h2: 'Cross-border leadership or expatriate executive role',
+          t2: isHighExp ? '1–3 years post-qualification' : '3–5 years post-qualification',
+          h3: 'Global executive or international portfolio career',
+          t3: '5–9 years post-qualification',
+        },
+        'Academia or research': {
+          h1: 'Research fellow, sessional lecturer or industry researcher',
+          t1: 'During doctoral study',
+          h2: 'Lecturer, postdoctoral researcher or senior industry researcher',
+          t2: '1–4 years post-PhD',
+          h3: 'Associate professor, senior lecturer or research lead',
+          t3: '8–15 years post-PhD',
+        },
+        'Sector change': {
+          h1: 'Entry into target sector at equivalent seniority level',
+          t1: 'Immediately post-qualification',
+          h2: senior ? 'Leadership role in new sector' : 'Senior role in new sector',
+          t2: '2–4 years post-qualification',
+          h3: senior ? 'Executive position leveraging cross-sector perspective' : 'Leadership role leveraging cross-sector experience',
+          t3: '4–8 years post-qualification',
+        },
+        'Consulting & advisory': {
+          h1: senior ? 'Independent consultancy or advisory practice established' : 'Associate or junior consultant in established firm',
+          t1: 'During or immediately after study',
+          h2: senior ? 'Retained clients and established reputation' : 'Independent practice or senior consultant',
+          t2: '2–4 years post-qualification',
+          h3: 'Recognised sector authority, author or keynote speaker',
+          t3: '5–9 years post-qualification',
+        },
+      };
+      return base[goal] || base['Executive leadership'];
+    }
+
+    const tl = getTimelines(selectedGoal, years, isSenior);
+
+    // ── ROLE-PERSONALISED WITHOUT TEXT ──
+    function getWithoutText(goal, role, years, sector, extra) {
+      const seniorityWord = isSenior ? 'your current executive-level role' : isMid ? 'your current management role' : 'your current position';
+      const extraContext = extra ? ` Given your interest in ${extra.toLowerCase().slice(0,80)}, this gap is particularly relevant.` : '';
+
+      const texts = {
+        'Executive leadership': `As a ${role} in ${sector}, you are likely at or approaching the ceiling of progression based on experience alone. Many organisations use postgraduate qualifications as a filter for the most senior appointments — not because of what was learned, but as a signal of strategic commitment.${extraContext}`,
+        'Start or scale a business': `Many successful founders launch without formal credentials, but growth typically stalls when the business needs to professionalise — raising investment, hiring senior leaders, or winning institutional clients who scrutinise founder credentials. As a ${role}, you have real-world experience to build on; a structured framework would accelerate this.${extraContext}`,
+        'International career': `Without an internationally-recognised qualification, accessing senior roles in new markets is significantly harder regardless of your experience as a ${role}. Recruiters and employers in Europe, the Gulf and Asia use postgraduate credentials as a first-pass filter for international hires.${extraContext}`,
+        'Academia or research': `Without a doctorate, university teaching and research leadership is effectively closed. Your experience as a ${role} is valuable context, but a PhD is the non-negotiable entry credential for an academic career in virtually every discipline.${extraContext}`,
+        'Sector change': `Moving sectors as a ${role} is possible, but employers in the target sector tend to discount experience that was built elsewhere. Without a qualification that signals cross-sector strategic capability, you may be asked to take a step down to enter.${extraContext}`,
+        'Consulting & advisory': `As a ${role}, you have credibility within your network — but independent consulting without formal credentials limits the organisations you can pitch to and the fees you can charge. Institutional clients increasingly require advisors to hold postgraduate qualifications.${extraContext}`,
+      };
+      return texts[goal] || texts['Executive leadership'];
+    }
+
+    // ── ROLE-PERSONALISED WITH TEXT ──
+    function getWithText(goal, role, years, tl) {
+      const texts = {
+        'Executive leadership': `A postgraduate qualification changes the conversation around ${role} specifically — it reframes you from a practitioner to a strategic leader in the eyes of executive search firms and selection panels. The credential does not replace your experience; it amplifies it by providing the language and frameworks that boards and senior hiring committees expect.`,
+        'Start or scale a business': `A qualification gives you structured access to strategy, finance, and leadership frameworks that most founders learn slowly through costly trial and error. It also opens doors — investors, accelerators and institutional partners look more favourably on founders with postgraduate credentials, particularly when pitching for significant capital.`,
+        'International career': `An internationally-awarded qualification from a recognised institution establishes immediate credibility in markets where your name and track record as a ${role} may not be known. It signals academic rigour and cross-cultural fluency — qualities that international employers actively screen for at the senior level.`,
+        'Academia or research': `The doctorate is the gateway credential. With it, you become eligible for lectureships, fellowships, postgraduate supervision and peer-reviewed publication — none of which are accessible without it, regardless of your professional experience as a ${role}.`,
+        'Sector change': `A qualification that bridges your background as a ${role} and your target sector provides the narrative that makes a career change credible. It removes the question marks that hiring managers in new sectors typically have about transferability — and replaces them with evidence of deliberate professional development.`,
+        'Consulting & advisory': `A postgraduate qualification — particularly an executive masters or doctorate — dramatically expands the client base available to you as a ${role}. It enables you to pitch to organisations that require formal credentials from their advisors, and justifies fee levels that reflect genuine senior expertise rather than practitioner experience alone.`,
+      };
+      return texts[goal] || texts['Executive leadership'];
+    }
+
+    // ── HONEST ASSESSMENT ──
     const experienceNote =
       years === '1-4'
-        ? 'With 1–4 years of experience, you may still meet Chancellor\'s entry requirement. Applications from candidates with only 1–4 years experience will be considered on a case-by-case basis. If your qualifications and experience are strong, you are encouraged to apply — admission decisions will be made following a review by the admissions team.'
+        ? `With 1–4 years of experience as a ${role}, you may still meet Chancellor's entry requirement. Applications from candidates with only 1–4 years experience will be considered on a case-by-case basis. If your qualifications and experience are strong, you are encouraged to apply — admission decisions will be made following a review by the admissions team.`
         : years === '5-8'
-        ? 'With 5–8 years of experience, you meet Chancellor\'s entry requirement. This is a strong time to study — your experience is sufficient to contextualise what you learn, and a qualification now compounds in value across the longest possible remaining career horizon.'
+        ? `With 5–8 years of experience as a ${role}, you meet Chancellor's entry requirement. This is a strong time to study — your experience is sufficient to contextualise what you learn, and a qualification now compounds in value across the longest possible remaining career horizon.`
         : years === '9-14'
-        ? 'With 9–14 years of experience, you are at the inflection point where many professionals find that experience alone stops opening new doors. A postgraduate qualification at this stage often delivers the highest career return — you bring enough context to extract maximum value from the programme, with enough career ahead to realise it.'
-        : 'With 15+ years of experience, the question is not whether you are capable — it is whether your credentials reflect the level your capability deserves. A doctorate or executive masters at this career stage is as much a legitimising credential as a learning experience, and it opens board-level and academic doors that experience alone rarely unlocks.';
+        ? `With 9–14 years of experience as a ${role}, you are at the inflection point where many professionals find that experience alone stops opening new doors. A postgraduate qualification at this stage often delivers the highest career return — you bring enough context to extract maximum value from the programme, with enough career ahead to realise it.`
+        : `With 15+ years of experience as a ${role}, the question is not whether you are capable — it is whether your credentials reflect the level your capability deserves. A doctorate or executive masters at this career stage is as much a legitimising credential as a learning experience, and it opens board-level and academic doors that experience alone rarely unlocks.`;
 
     const countryNote = COUNTRY_NOTES[country] ||
       `All Chancellor programmes are delivered 100% online, allowing you to study from ${country} without interrupting your career or relocating.`;
-
-    const withParts = trajectory.with.split('. ');
 
     const destBadge = destSector
       ? `<div class="dest-badge">
@@ -1172,6 +1268,8 @@ function generate() {
          </div>`
       : '';
 
+    const withoutText = getWithoutText(selectedGoal, role, years, sector, extra);
+    const withText    = getWithText(selectedGoal, role, years, tl);
     const html = `
       <div class="result-profile">
         <div class="result-avatar">${initials}</div>
@@ -1184,28 +1282,28 @@ function generate() {
 
       <p class="section-label">Without further study</p>
       <div class="trajectory-card" style="border-left: 3px solid var(--muted)">
-        <p class="traj-body">${trajectory.without}</p>
+        <p class="traj-body">${withoutText}</p>
       </div>
 
       <p class="section-label" style="margin-top: 1.1rem">With a postgraduate qualification</p>
       <div class="trajectory-card">
         <div class="traj-header">
-          <span class="traj-horizon">${trajectory.t1}</span>
-          <span class="traj-role">${trajectory.h1}</span>
+          <span class="traj-horizon">${tl.t1}</span>
+          <span class="traj-role">${tl.h1}</span>
         </div>
-        <p class="traj-body">${withParts[0]}.</p>
+        <p class="traj-body">${withText}</p>
       </div>
       <div class="trajectory-card">
         <div class="traj-header">
-          <span class="traj-horizon">${trajectory.t2}</span>
-          <span class="traj-role">${trajectory.h2}</span>
+          <span class="traj-horizon">${tl.t2}</span>
+          <span class="traj-role">${tl.h2}</span>
         </div>
-        <p class="traj-body">${withParts.slice(1, 3).join('. ')}.</p>
+        <p class="traj-body">At this horizon, the qualification has established its value. You are no longer defined solely by your experience — your credentials and your track record work together to open doors that experience alone could not.</p>
       </div>
       <div class="trajectory-card">
         <div class="traj-header">
-          <span class="traj-horizon">${trajectory.t3}</span>
-          <span class="traj-role">${trajectory.h3}</span>
+          <span class="traj-horizon">${tl.t3}</span>
+          <span class="traj-role">${tl.h3}</span>
         </div>
         <p class="traj-body">By this horizon, the qualification has done its work. What remains is your track record, your network, and the leadership you have demonstrated along the way.</p>
       </div>
