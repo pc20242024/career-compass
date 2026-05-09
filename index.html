@@ -623,6 +623,148 @@
   }
   .cta-btn.secondary:hover { background: rgba(255,255,255,0.18); }
 
+  /* ── TIMELINE VISUALISATION ── */
+  .timeline-wrap {
+    margin: 1.5rem 0;
+    position: relative;
+  }
+
+  .timeline-track {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 0 0 0.5rem;
+  }
+
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    right: 22px;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .timeline-node {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .timeline-node:first-child .timeline-dot { background: var(--gold); color: #fff; }
+
+  .timeline-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .timeline-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .timeline-line {
+    flex: 0.5;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--border));
+    align-self: center;
+    margin-top: -22px;
+  }
+
+  /* ── HOLDING BACK SECTION ── */
+  .holding-back {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.3rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+
+  .holding-back-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .holding-back-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hb-option {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    background: var(--paper);
+    font-size: 0.75rem;
+    color: var(--muted);
+    transition: all 0.15s;
+    border-radius: 4px;
+    user-select: none;
+    text-align: center;
+  }
+
+  .hb-option:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
+  .hb-option.selected { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  .objection-response {
+    display: none;
+    background: var(--gold-pale);
+    border-left: 3px solid var(--gold);
+    padding: 0.85rem 1rem;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--ink);
+    border-radius: 0 4px 4px 0;
+    margin-top: 0.8rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ── RESPONSIVE ADDITIONS ── */
+  @media (max-width: 640px) {
+    .timeline-role { font-size: 0.72rem; }
+    .holding-back-options { grid-template-columns: 1fr 1fr; }
+  }
+
   /* ── RESET ── */
   .reset-row { text-align: center; padding: 1rem 0 0; }
 
@@ -726,12 +868,17 @@
 <div class="form-wrap" id="formWrap">
 
   <div class="field">
-    <p class="field-label"><span class="field-num">1</span>Your current role</p>
+    <p class="field-label"><span class="field-num">1</span>Your first name</p>
+    <input type="text" id="fName" placeholder="e.g. Sarah" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <p class="field-label"><span class="field-num">2</span>Your current role</p>
     <input type="text" id="fRole" placeholder="e.g. Senior Manager, Clinical Director, Head of Finance…" autocomplete="off">
   </div>
 
   <div class="field">
-    <p class="field-label"><span class="field-num">2</span>Your sector</p>
+    <p class="field-label"><span class="field-num">3</span>Your sector</p>
     <select id="fSector">
       <option value="">Select your sector…</option>
       <option>Arts & Culture</option>
@@ -750,7 +897,7 @@
 
   <div class="grid-2">
     <div class="field">
-      <p class="field-label"><span class="field-num">3</span>Years of experience</p>
+      <p class="field-label"><span class="field-num">4</span>Years of experience</p>
       <select id="fYears" onchange="onYearsChange()">
         <option value="">Select…</option>
         <option value="1-4">1–4 years</option>
@@ -758,10 +905,9 @@
         <option value="9-14">9–14 years</option>
         <option value="15+">15+ years</option>
       </select>
-
     </div>
     <div class="field">
-      <p class="field-label"><span class="field-num">4</span>Country</p>
+      <p class="field-label"><span class="field-num">5</span>Country</p>
       <select id="fCountry">
         <option value="">Select your country…</option>
         <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option><option>Angola</option><option>Antigua and Barbuda</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahamas</option><option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option><option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option><option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option><option>Brunei</option><option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Cambodia</option><option>Cameroon</option><option>Canada</option><option>Central African Republic</option><option>Chad</option><option>Chile</option><option>China</option><option>Colombia</option><option>Comoros</option><option>Congo (Democratic Republic)</option><option>Congo (Republic)</option><option>Cook Islands</option><option>Costa Rica</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option><option>Czech Republic</option><option>Denmark</option><option>Djibouti</option><option>Dominica</option><option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option><option>El Salvador</option><option>Equatorial Guinea</option><option>Eritrea</option><option>Estonia</option><option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option><option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Grenada</option><option>Guatemala</option><option>Guinea</option><option>Guinea-Bissau</option><option>Guyana</option><option>Haiti</option><option>Honduras</option><option>Hungary</option><option>Iceland</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Jamaica</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kiribati</option><option>Kosovo</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option><option>Latvia</option><option>Lebanon</option><option>Lesotho</option><option>Liberia</option><option>Libya</option><option>Liechtenstein</option><option>Lithuania</option><option>Luxembourg</option><option>Madagascar</option><option>Malawi</option><option>Malaysia</option><option>Maldives</option><option>Mali</option><option>Malta</option><option>Marshall Islands</option><option>Mauritania</option><option>Mauritius</option><option>Mexico</option><option>Micronesia</option><option>Moldova</option><option>Monaco</option><option>Mongolia</option><option>Montenegro</option><option>Morocco</option><option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nauru</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option><option>Niger</option><option>Nigeria</option><option>Niue</option><option>North Korea</option><option>North Macedonia</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palau</option><option>Palestine</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Rwanda</option><option>Saint Kitts and Nevis</option><option>Saint Lucia</option><option>Saint Vincent and the Grenadines</option><option>Samoa</option><option>San Marino</option><option>Sao Tome and Principe</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option><option>Seychelles</option><option>Sierra Leone</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>Solomon Islands</option><option>Somalia</option><option>South Africa</option><option>South Korea</option><option>South Sudan</option><option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Suriname</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Timor-Leste</option><option>Togo</option><option>Tonga</option><option>Trinidad and Tobago</option><option>Tunisia</option><option>Turkey</option><option>Turkmenistan</option><option>Tuvalu</option><option>Uganda</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Vanuatu</option><option>Vatican City</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
@@ -770,7 +916,7 @@
   </div>
 
   <div class="field">
-    <p class="field-label"><span class="field-num">5</span>Your career goal</p>
+    <p class="field-label"><span class="field-num">6</span>Your career goal</p>
     <div class="goal-grid" id="goalGrid">
       <div class="goal-card" data-goal="Executive leadership" onclick="selectGoal(this)">
         <div class="goal-name">Executive leadership</div>
@@ -801,11 +947,27 @@
 
   <div class="field">
     <p class="field-label">
-      <span class="field-num">6</span>
+      <span class="field-num">7</span>
       Tell us more about your goals
       <span class="field-opt">(optional but helps us recommend better)</span>
     </p>
     <textarea id="fExtra" placeholder="e.g. I want to work in an art gallery, I'm moving into AI leadership, I want to start a fashion brand, I'm relocating to Europe…"></textarea>
+  </div>
+
+  <div class="field">
+    <p class="field-label">
+      <span class="field-num">8</span>
+      What's holding you back?
+      <span class="field-opt">(optional)</span>
+    </p>
+    <div class="holding-back-options" id="holdingBackOptions">
+      <div class="hb-option" data-concern="cost" onclick="selectConcern(this)">💰 Cost of study</div>
+      <div class="hb-option" data-concern="time" onclick="selectConcern(this)">⏱ Time commitment</div>
+      <div class="hb-option" data-concern="recognition" onclick="selectConcern(this)">🎓 Recognition of qualification</div>
+      <div class="hb-option" data-concern="employer" onclick="selectConcern(this)">🏢 Employer support</div>
+      <div class="hb-option" data-concern="family" onclick="selectConcern(this)">👨‍👩‍👧 Family commitments</div>
+      <div class="hb-option" data-concern="unsure" onclick="selectConcern(this)">🤔 Not sure if it's right for me</div>
+    </div>
   </div>
 
   <button class="btn-submit" id="submitBtn" disabled onclick="generate()">
@@ -1090,7 +1252,7 @@ function selectGoal(el) {
   checkReady();
 }
 
-['fRole', 'fSector', 'fCountry'].forEach(id => {
+['fName', 'fRole', 'fSector', 'fCountry'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener('input', checkReady);
   el.addEventListener('change', checkReady);
@@ -1099,6 +1261,7 @@ document.getElementById('fYears').addEventListener('change', checkReady);
 
 function checkReady() {
   const ok =
+    document.getElementById('fName').value.trim() &&
     document.getElementById('fRole').value.trim() &&
     document.getElementById('fSector').value &&
     document.getElementById('fYears').value &&
@@ -1107,12 +1270,25 @@ function checkReady() {
   document.getElementById('submitBtn').disabled = !ok;
 }
 
+let selectedConcern = null;
+
+function selectConcern(el) {
+  document.querySelectorAll('.hb-option').forEach(o => o.classList.remove('selected'));
+  if (selectedConcern === el.dataset.concern) {
+    selectedConcern = null;
+  } else {
+    el.classList.add('selected');
+    selectedConcern = el.dataset.concern;
+  }
+}
+
 function getInitials(role) {
   return role.split(' ').filter(w => w).map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
 // ── GENERATE RESULTS ──────────────────────────────────────────────────────────
 function generate() {
+  const firstName = document.getElementById('fName').value.trim();
   const role    = document.getElementById('fRole').value.trim();
   const sector  = document.getElementById('fSector').value;
   const years   = document.getElementById('fYears').value;
@@ -1293,11 +1469,42 @@ function generate() {
 
     const withoutText = getWithoutText(selectedGoal, role, years, sector, extra);
     const withText    = getWithText(selectedGoal, role, years, tl);
+
+    // ── SMART CTA LABELS ──
+    const ctaLabels = {
+      'Executive leadership': { primary: 'Apply now', secondary: 'Discuss executive entry' },
+      'Start or scale a business': { primary: 'Apply now', secondary: 'Speak with an advisor' },
+      'International career': { primary: 'Apply now', secondary: 'Ask about international recognition' },
+      'Academia or research': { primary: 'Apply now', secondary: 'Book a research consultation' },
+      'Sector change': { primary: 'Apply now', secondary: 'Discuss credit recognition' },
+      'Consulting & advisory': { primary: 'Apply now', secondary: 'Speak with an advisor' },
+    };
+    const cta = ctaLabels[selectedGoal] || ctaLabels['Executive leadership'];
+
+    // ── OBJECTION RESPONSES ──
+    const objections = {
+      cost: `Chancellor programmes are designed for working professionals — meaning you continue earning while you study. Many employers also fund or contribute to postgraduate fees; our advisors can help you build a case for employer sponsorship. The return on a postgraduate qualification — in salary, seniority and opportunity — typically far exceeds the cost within 2–3 years.`,
+      time: `All Chancellor programmes are 100% online with no fixed class times, designed to fit around full-time careers. Most students spend 8–12 hours per week studying. The Executive Master of Business Administration completes in 1 year; the PhD in 3–5 years part-time. Our advisors can walk you through how other ${sector} professionals have made it work.`,
+      recognition: `Chancellor delivers its programmes in partnership with internationally accredited institutions — the International Executive School and Rome Business School. Graduates hold qualifications that are recognised by employers in over 60 countries. Our advisors can provide specific recognition information for your country and sector.`,
+      employer: `Many Chancellor students study with employer support — either full sponsorship or partial funding. We can provide you with a professional programme overview designed for HR and finance decision-makers, making the case for employer investment straightforward. Our advisors help with this regularly.`,
+      family: `Chancellor's fully online, flexible model was designed with exactly this in mind. There are no set class times, no campus visits, and no travel. You study when it suits you — evenings, weekends, or during quiet periods at work. Many of our students are parents and caregivers. Our advisors can share how others in your situation have structured their study.`,
+      unsure: `That's exactly why the Career Compass exists — and why speaking with an advisor matters. A 20-minute conversation with one of our team costs nothing and commits you to nothing. They can tell you honestly whether a programme is right for your situation, your goals and your budget. No pressure, no sales pitch.`,
+    };
+
+    const objectionHtml = selectedConcern ? `
+      <div class="holding-back">
+        <p class="holding-back-label">We hear this often — here's an honest answer</p>
+        <p style="font-size:0.82rem;line-height:1.68;color:var(--muted)">${objections[selectedConcern]}</p>
+      </div>` : '';
+
+    // ── PROGRAMME TEXT FOR EMAIL ──
+    const progText = programmes.map(p => `${p.badge}: ${p.name} (${p.partner} · ${p.duration})`).join('\n');
+
     const html = `
       <div class="result-profile">
         <div class="result-avatar">${initials}</div>
         <div>
-          <div class="result-name">${role}</div>
+          <div class="result-name">${firstName ? firstName + ' — ' : ''}${role}</div>
           <div class="result-meta">${sector} · ${years} years · ${country} · ${selectedGoal}</div>
           ${destBadge}
         </div>
@@ -1308,26 +1515,35 @@ function generate() {
         <p class="traj-body">${withoutText}</p>
       </div>
 
-      <p class="section-label" style="margin-top: 1.1rem">With a postgraduate qualification</p>
-      <div class="trajectory-card">
-        <div class="traj-header">
-          <span class="traj-horizon">${tl.t1}</span>
-          <span class="traj-role">${tl.h1}</span>
+      <p class="section-label" style="margin-top: 1.1rem">Your career trajectory with a postgraduate qualification</p>
+
+      <div class="timeline-wrap">
+        <div class="timeline-track">
+          <div class="timeline-node">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-label">${tl.t1}</div>
+            <div class="timeline-role">${tl.h1}</div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-dot">2</div>
+            <div class="timeline-label">${tl.t2}</div>
+            <div class="timeline-role">${tl.h2}</div>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-label">${tl.t3}</div>
+            <div class="timeline-role">${tl.h3}</div>
+          </div>
         </div>
+      </div>
+
+      <div class="trajectory-card">
         <p class="traj-body">${withText}</p>
       </div>
       <div class="trajectory-card">
-        <div class="traj-header">
-          <span class="traj-horizon">${tl.t2}</span>
-          <span class="traj-role">${tl.h2}</span>
-        </div>
         <p class="traj-body">At this horizon, the qualification has established its value. You are no longer defined solely by your experience — your credentials and your track record work together to open doors that experience alone could not.</p>
       </div>
       <div class="trajectory-card">
-        <div class="traj-header">
-          <span class="traj-horizon">${tl.t3}</span>
-          <span class="traj-role">${tl.h3}</span>
-        </div>
         <p class="traj-body">By this horizon, the qualification has done its work. What remains is your track record, your network, and the leadership you have demonstrated along the way.</p>
       </div>
 
@@ -1347,20 +1563,22 @@ function generate() {
       </div>
 
       <div class="honest-box">
-        <strong>An honest assessment for you</strong>
+        <strong>An honest assessment for ${firstName || 'you'}</strong>
         ${experienceNote} ${countryNote}
       </div>
+
+      ${objectionHtml}
 
       ${progsHtml}
 
       <div class="cta-bar">
         <div class="cta-text">
-          <p>Ready to find your direction?</p>
+          <p>Ready to take the next step${firstName ? ', ' + firstName : ''}?</p>
           <p>Applications open year-round · Processed within 1–3 business days</p>
         </div>
         <div class="cta-buttons">
-          <a href="https://chancellor.education/contact/" target="_blank" class="cta-btn secondary">Speak with a Course Advisor</a>
-          <a href="https://chancellor.education/apply-now/" target="_blank" class="cta-btn primary">Apply now</a>
+          <a href="https://chancellor.education/contact/" target="_blank" class="cta-btn secondary">${cta.secondary}</a>
+          <a href="https://chancellor.education/apply-now/" target="_blank" class="cta-btn primary">${cta.primary}</a>
         </div>
       </div>
 
@@ -1380,6 +1598,54 @@ function generate() {
   }, 2000);
 }
 
+// ── SEND EMAIL VIA EMAILJS ─────────────────────────────────────────────────
+function sendEmail(firstName, role, sector, years, country, goal, withoutText, withText, assessment, programmes) {
+  const emailEl  = document.getElementById('emailInput');
+  const statusEl = document.getElementById('emailStatus');
+  const btnEl    = document.querySelector('.email-send-btn');
+
+  const email = emailEl ? emailEl.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    statusEl.textContent = 'Please enter a valid email address.';
+    statusEl.className = 'email-status error';
+    statusEl.style.display = 'block';
+    return;
+  }
+
+  btnEl.disabled = true;
+  btnEl.textContent = 'Sending…';
+
+  const params = {
+    first_name:   firstName || 'there',
+    role:         role,
+    sector:       sector,
+    years:        years,
+    country:      country,
+    goal:         goal,
+    without_text: withoutText,
+    with_text:    withText,
+    assessment:   assessment,
+    programmes:   programmes,
+    user_email:   email,
+    reply_to:     email,
+  };
+
+  emailjs.send('service_4fm6jxb', 'template_pvagfpb', params)
+    .then(() => {
+      statusEl.textContent = '✓ Sent! Check your inbox — and we\'ll be in touch soon.';
+      statusEl.className = 'email-status success';
+      statusEl.style.display = 'block';
+      btnEl.textContent = 'Sent ✓';
+    })
+    .catch(() => {
+      statusEl.textContent = 'Something went wrong. Please try again or contact us directly.';
+      statusEl.className = 'email-status error';
+      statusEl.style.display = 'block';
+      btnEl.disabled = false;
+      btnEl.textContent = 'Email my results';
+    });
+}
+
 // ── RESET ─────────────────────────────────────────────────────────────────────
 function resetForm() {
   document.getElementById('results').style.display = 'none';
@@ -1387,7 +1653,10 @@ function resetForm() {
   document.getElementById('formWrap').style.display = 'block';
 
   selectedGoal = null;
+  selectedConcern = null;
   document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.hb-option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('fName').value = '';
   document.getElementById('fYears').value = '';
   document.getElementById('fExtra').value = '';
   document.getElementById('submitBtn').disabled = true;
