@@ -1146,12 +1146,12 @@ function generate() {
 
       const base = {
         'Executive leadership': {
-          h1: senior ? 'Senior Director or Division Head' : isMid ? 'Head of Department or Senior Manager' : 'Senior Manager or Team Lead',
-          t1: isHighExp ? 'During or immediately post-qualification' : isMidExp ? '1–2 years post-qualification' : '2–3 years post-qualification',
-          h2: senior ? 'C-suite or Board-level Executive' : isMid ? 'Director or VP' : 'Head of Department',
-          t2: isHighExp ? '1–3 years post-qualification' : isMidExp ? '3–5 years post-qualification' : '4–6 years post-qualification',
-          h3: senior ? 'Board Director, Chair or Group Executive' : 'C-suite or Senior Executive',
-          t3: isHighExp ? '3–6 years post-qualification' : '6–10 years post-qualification',
+          h1: senior ? 'Senior Director or Division Head' : isMid ? 'Head of Department or Senior Manager' : 'Supervisor or Team Leader',
+          t1: isHighExp ? 'During or immediately post-qualification' : isMidExp ? '1–2 years post-qualification' : isLowExp && !senior && !isMid ? '3–5 years post-qualification' : '2–3 years post-qualification',
+          h2: senior ? 'C-suite or Board-level Executive' : isMid ? 'Director or VP' : 'Manager or Department Head',
+          t2: isHighExp ? '1–3 years post-qualification' : isMidExp ? '3–5 years post-qualification' : isLowExp && !senior && !isMid ? '6–10 years post-qualification' : '4–6 years post-qualification',
+          h3: senior ? 'Board Director, Chair or Group Executive' : isMid ? 'C-suite or Senior Executive' : 'Senior Manager or Director',
+          t3: isHighExp ? '3–6 years post-qualification' : isMid ? '6–10 years post-qualification' : '10–15 years post-qualification',
         },
         'Start or scale a business': {
           h1: 'Business plan or pilot venture with credible investor pitch',
@@ -1201,8 +1201,19 @@ function generate() {
 
     // ── ROLE-PERSONALISED WITHOUT TEXT ──
     function getWithoutText(goal, role, years, sector, extra) {
-      const seniorityWord = isSenior ? 'your current executive-level role' : isMid ? 'your current management role' : 'your current position';
       const extraContext = extra ? ` Given your interest in ${extra.toLowerCase().slice(0,80)}, this gap is particularly relevant.` : '';
+
+      if (isJunior) {
+        const juniorTexts = {
+          'Executive leadership': `As a ${role} in ${sector}, you are still early in your career journey. Without a postgraduate qualification, progression beyond operational roles is likely to be slow — the leadership positions you are aiming for increasingly require formal credentials to even be considered at the interview stage.${extraContext}`,
+          'Start or scale a business': `As a ${role}, you have energy and perspective that founders need — but without formal frameworks for strategy and finance, scaling beyond a small operation is genuinely difficult. A qualification at this stage would give you the structural thinking that accelerates early-stage business growth.${extraContext}`,
+          'International career': `As a ${role}, breaking into international roles without a postgraduate qualification is very difficult. International employers — particularly in the Gulf, Europe and Asia — use qualifications as a first filter, especially for candidates without an established track record in those markets.${extraContext}`,
+          'Academia or research': `Without a postgraduate qualification — and ultimately a doctorate — an academic or research career is not accessible, regardless of your professional experience. A masters is the essential first step, followed by a PhD for anyone serious about teaching or research leadership.${extraContext}`,
+          'Sector change': `Moving sectors as a ${role} without a qualification is challenging — you have limited experience to transfer, and employers in a new sector will want evidence of both relevant knowledge and professional commitment. A qualification bridges that gap.${extraContext}`,
+          'Consulting & advisory': `Building a consulting practice as a ${role} without a postgraduate qualification would be very difficult. Clients — particularly organisations rather than individuals — expect their advisors to hold formal credentials. A qualification is the entry point for advisory credibility.${extraContext}`,
+        };
+        return juniorTexts[goal] || juniorTexts['Executive leadership'];
+      }
 
       const texts = {
         'Executive leadership': `As a ${role} in ${sector}, you are likely at or approaching the ceiling of progression based on experience alone. Many organisations use postgraduate qualifications as a filter for the most senior appointments — not because of what was learned, but as a signal of strategic commitment.${extraContext}`,
@@ -1217,6 +1228,18 @@ function generate() {
 
     // ── ROLE-PERSONALISED WITH TEXT ──
     function getWithText(goal, role, years, tl) {
+      if (isJunior) {
+        const juniorWith = {
+          'Executive leadership': `A postgraduate qualification is the most direct way to accelerate beyond your current position as a ${role}. It signals to employers that you are serious about leadership — and it gives you the strategic vocabulary, frameworks and network that make promotion decisions easier. Without it, progression beyond operational roles in competitive sectors is slow.`,
+          'Start or scale a business': `A qualification would give you structured frameworks for strategy, financial management and leadership that most early-stage founders lack. It also builds a network of peers and mentors that is genuinely useful when starting a business. Starting younger with a stronger foundation is a real advantage.`,
+          'International career': `A postgraduate qualification from an internationally recognised institution opens doors that experience alone — particularly early-career experience — cannot. It signals academic credibility and professional seriousness to international employers who have no context for your background.`,
+          'Academia or research': `A postgraduate qualification is the mandatory first step toward any academic or research career. Without it, none of the doors — lectureships, research positions, publication opportunities — are open. The earlier you begin this pathway, the longer the career ahead.`,
+          'Sector change': `A qualification is your best tool for a credible sector change at this stage of your career. It gives you the theoretical grounding in a new field that experience in your current role cannot provide, and it signals deliberate professional development rather than opportunistic movement.`,
+          'Consulting & advisory': `Building a consulting practice requires credibility that early-career experience cannot yet provide on its own. A postgraduate qualification is the foundation — it gives you the frameworks to deliver genuine value and the credentials to win clients who might otherwise question your experience level.`,
+        };
+        return juniorWith[goal] || juniorWith['Executive leadership'];
+      }
+
       const texts = {
         'Executive leadership': `A postgraduate qualification changes the conversation around ${role} specifically — it reframes you from a practitioner to a strategic leader in the eyes of executive search firms and selection panels. The credential does not replace your experience; it amplifies it by providing the language and frameworks that boards and senior hiring committees expect.`,
         'Start or scale a business': `A qualification gives you structured access to strategy, finance, and leadership frameworks that most founders learn slowly through costly trial and error. It also opens doors — investors, accelerators and institutional partners look more favourably on founders with postgraduate credentials, particularly when pitching for significant capital.`,
