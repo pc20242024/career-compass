@@ -1255,7 +1255,10 @@ function generate() {
     const resultsEl = document.getElementById('results');
     resultsEl.innerHTML = html;
     resultsEl.style.display = 'block';
-    setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    setTimeout(() => {
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      sendHeight();
+    }, 100);
 
   }, 2000);
 }
@@ -1274,7 +1277,25 @@ function resetForm() {
   document.getElementById('submitBtn').disabled = true;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  sendHeight();
 }
+
+// ── AUTO-RESIZE: sends page height to parent WordPress page ──
+function sendHeight() {
+  var height = document.body.scrollHeight;
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage(
+      { type: 'rc-height', height: height },
+      '*'
+    );
+  }
+}
+
+window.addEventListener('load', sendHeight);
+window.addEventListener('resize', sendHeight);
+
+var resizeObserver = new MutationObserver(sendHeight);
+resizeObserver.observe(document.body, { childList: true, subtree: true, attributes: true });
 </script>
 </body>
 </html>
