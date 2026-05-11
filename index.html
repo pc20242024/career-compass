@@ -1374,9 +1374,22 @@ function generate() {
 
     const tl = getTimelines(selectedGoal, years, isSenior);
 
+    // ── EXTRA CONTEXT BUILDER ──
+    function buildExtraContext(extra) {
+      if (!extra || !extra.trim()) return '';
+      const cleaned = extra.trim()
+        .replace(/^(i want to|i'd like to|i would like to|i am looking to|i'm looking to|i hope to|i plan to)\s*/i, '')
+        .replace(/^i\s+/i, '')
+        .slice(0, 200)
+        .trim();
+      const contextText = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+      const finalText = contextText.endsWith('.') ? contextText : contextText + '.';
+      return ` ${finalText}`;
+    }
+
     // ── ROLE-PERSONALISED WITHOUT TEXT ──
     function getWithoutText(goal, role, years, sector, extra) {
-      const extraContext = extra ? ` Given your interest in ${extra.toLowerCase().slice(0,80)}, this gap is particularly relevant.` : '';
+      const extraContext = buildExtraContext(extra);
 
       if (isJunior) {
         const juniorTexts = {
