@@ -1374,42 +1374,28 @@ function generate() {
 
     const tl = getTimelines(selectedGoal, years, isSenior);
 
-    // ── EXTRA CONTEXT BUILDER ──
-    function buildExtraContext(extra) {
-      if (!extra || !extra.trim()) return '';
-      const cleaned = extra.trim()
-        .replace(/^(i want to|i'd like to|i would like to|i am looking to|i'm looking to|i hope to|i plan to)\s*/i, '')
-        .replace(/^i\s+/i, '')
-        .slice(0, 200)
-        .trim();
-      const contextText = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-      const finalText = contextText.endsWith('.') ? contextText : contextText + '.';
-      return ` ${finalText}`;
-    }
-
     // ── ROLE-PERSONALISED WITHOUT TEXT ──
     function getWithoutText(goal, role, years, sector, extra) {
-      const extraContext = buildExtraContext(extra);
 
       if (isJunior) {
         const juniorTexts = {
-          'Executive leadership': `As a ${role} in ${sector}, you are still early in your career journey. Without a postgraduate qualification, progression beyond operational roles is likely to be slow — the leadership positions you are aiming for increasingly require formal credentials to even be considered at the interview stage.${extraContext}`,
-          'Start or scale a business': `As a ${role}, you have energy and perspective that founders need — but without formal frameworks for strategy and finance, scaling beyond a small operation is genuinely difficult. A qualification at this stage would give you the structural thinking that accelerates early-stage business growth.${extraContext}`,
-          'International career': `As a ${role}, breaking into international roles without a postgraduate qualification is very difficult. International employers — particularly in the Gulf, Europe and Asia — use qualifications as a first filter, especially for candidates without an established track record in those markets.${extraContext}`,
-          'Academia or research': `Without a postgraduate qualification — and ultimately a doctorate — an academic or research career is not accessible, regardless of your professional experience. A masters is the essential first step, followed by a PhD for anyone serious about teaching or research leadership.${extraContext}`,
-          'Sector change': `Moving sectors as a ${role} without a qualification is challenging — you have limited experience to transfer, and employers in a new sector will want evidence of both relevant knowledge and professional commitment. A qualification bridges that gap.${extraContext}`,
-          'Consulting & advisory': `Building a consulting practice as a ${role} without a postgraduate qualification would be very difficult. Clients — particularly organisations rather than individuals — expect their advisors to hold formal credentials. A qualification is the entry point for advisory credibility.${extraContext}`,
+          'Executive leadership': `As a ${role} in ${sector}, you are still early in your career journey. Without a postgraduate qualification, progression beyond operational roles is likely to be slow — the leadership positions you are aiming for increasingly require formal credentials to even be considered at the interview stage.`,
+          'Start or scale a business': `As a ${role}, you have energy and perspective that founders need — but without formal frameworks for strategy and finance, scaling beyond a small operation is genuinely difficult. A qualification at this stage would give you the structural thinking that accelerates early-stage business growth.`,
+          'International career': `As a ${role}, breaking into international roles without a postgraduate qualification is very difficult. International employers — particularly in the Gulf, Europe and Asia — use qualifications as a first filter, especially for candidates without an established track record in those markets.`,
+          'Academia or research': `Without a postgraduate qualification — and ultimately a doctorate — an academic or research career is not accessible, regardless of your professional experience. A masters is the essential first step, followed by a PhD for anyone serious about teaching or research leadership.`,
+          'Sector change': `Moving sectors as a ${role} without a qualification is challenging — you have limited experience to transfer, and employers in a new sector will want evidence of both relevant knowledge and professional commitment. A qualification bridges that gap.`,
+          'Consulting & advisory': `Building a consulting practice as a ${role} without a postgraduate qualification would be very difficult. Clients — particularly organisations rather than individuals — expect their advisors to hold formal credentials. A qualification is the entry point for advisory credibility.`,
         };
         return juniorTexts[goal] || juniorTexts['Executive leadership'];
       }
 
       const texts = {
-        'Executive leadership': `As a ${role} in ${sector}, you are likely at or approaching the ceiling of progression based on experience alone. Many organisations use postgraduate qualifications as a filter for the most senior appointments — not because of what was learned, but as a signal of strategic commitment.${extraContext}`,
-        'Start or scale a business': `Many successful founders launch without formal credentials, but growth typically stalls when the business needs to professionalise — raising investment, hiring senior leaders, or winning institutional clients who scrutinise founder credentials. As a ${role}, you have real-world experience to build on; a structured framework would accelerate this.${extraContext}`,
-        'International career': `Without an internationally-recognised qualification, accessing senior roles in new markets is significantly harder regardless of your experience as a ${role}. Recruiters and employers in Europe, the Gulf and Asia use postgraduate credentials as a first-pass filter for international hires.${extraContext}`,
-        'Academia or research': `Without a doctorate, university teaching and research leadership is effectively closed. Your experience as a ${role} is valuable context, but a PhD is the non-negotiable entry credential for an academic career in virtually every discipline.${extraContext}`,
-        'Sector change': `Moving sectors as a ${role} is possible, but employers in the target sector tend to discount experience that was built elsewhere. Without a qualification that signals cross-sector strategic capability, you may be asked to take a step down to enter.${extraContext}`,
-        'Consulting & advisory': `As a ${role}, you have credibility within your network — but independent consulting without formal credentials limits the organisations you can pitch to and the fees you can charge. Institutional clients increasingly require advisors to hold postgraduate qualifications.${extraContext}`,
+        'Executive leadership': `As a ${role} in ${sector}, you are likely at or approaching the ceiling of progression based on experience alone. Many organisations use postgraduate qualifications as a filter for the most senior appointments — not because of what was learned, but as a signal of strategic commitment.`,
+        'Start or scale a business': `Many successful founders launch without formal credentials, but growth typically stalls when the business needs to professionalise — raising investment, hiring senior leaders, or winning institutional clients who scrutinise founder credentials. As a ${role}, you have real-world experience to build on; a structured framework would accelerate this.`,
+        'International career': `Without an internationally-recognised qualification, accessing senior roles in new markets is significantly harder regardless of your experience as a ${role}. Recruiters and employers in Europe, the Gulf and Asia use postgraduate credentials as a first-pass filter for international hires.`,
+        'Academia or research': `Without a doctorate, university teaching and research leadership is effectively closed. Your experience as a ${role} is valuable context, but a PhD is the non-negotiable entry credential for an academic career in virtually every discipline.`,
+        'Sector change': `Moving sectors as a ${role} is possible, but employers in the target sector tend to discount experience that was built elsewhere. Without a qualification that signals cross-sector strategic capability, you may be asked to take a step down to enter.`,
+        'Consulting & advisory': `As a ${role}, you have credibility within your network — but independent consulting without formal credentials limits the organisations you can pitch to and the fees you can charge. Institutional clients increasingly require advisors to hold postgraduate qualifications.`,
       };
       return texts[goal] || texts['Executive leadership'];
     }
